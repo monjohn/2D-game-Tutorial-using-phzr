@@ -1,16 +1,16 @@
 (ns breakout-cljs.core
-  (:require ))
+  (:require
+    [phzr.game :as pg]
+    [phzr.core :as p :refer [pset!]]))
 
 (enable-console-print!)
 
-(println "This text is printed from src/breakout-cljs/core.cljs. Go ahead and edit it and see reloading in action.")
+(defn create [])
+(defn preload [])
 
-;; define your app data so that it doesn't get over-written on reload
+(defn start-game []
+  (pg/->Game 800 600 (p/phaser-constants :auto) "app"
+                 {"preload" preload
+                  "create"  create}))
 
-(defonce app-state (atom {:text "Hello world!"}))
-
-(defn on-js-reload []
-  ;; optionally touch your app-state to force rerendering depending on
-  ;; your application
-  ;; (swap! app-state update-in [:__figwheel_counter] inc)
-)
+(defn on-js-reload [])
