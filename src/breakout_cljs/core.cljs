@@ -18,13 +18,21 @@
   (pset! (:stage game) :background-color "#eee")
   (pl/image (:load game) "ball" "img/ball.png"))
 
+(def ball-global (atom nil))
+
 (defn create [game]
-  (let [ball (pgof/sprite (:add game) 50 50 "ball")]))
+  (let [ball (pgof/sprite (:add game) 50 50 "ball")]
+    (reset! ball-global ball)))
+
+(defn update-fn []
+  (pset! @ball-global :x (inc (get @ball-global :x))))
+
 
 (defn start-game []
   (pg/->Game 800 600 (p/phaser-constants :auto) "app"
                  {"preload" preload
-                  "create"  create}))
+                  "create"  create
+                  "update"  update-fn}))
 
 (start-game)
 
